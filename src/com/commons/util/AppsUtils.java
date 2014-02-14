@@ -16,6 +16,7 @@ public abstract class AppsUtils {
 	 * Empty Constructor
 	 */
 	private AppsUtils() {
+		//TEST COMMIT
 	}
 
 	public static boolean isEmpty(Cursor cursor) {
