@@ -14,7 +14,7 @@ public abstract class AppsAbstractActivity extends SherlockActivity {
 	 */
 	public AppsAbstractActivity() {
 	}
-
+ 
 	/**
 	 * Init Controls
 	 */
