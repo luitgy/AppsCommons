@@ -3,7 +3,10 @@ package com.commons.util;
 import java.util.HashMap;
 import java.util.List;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 /**
  * @author Lluis Alonso Asc—n
@@ -16,6 +19,23 @@ public abstract class AppsUtils {
 	 * Empty Constructor
 	 */
 	private AppsUtils() {
+	}
+
+	public static boolean isConnexionEnabled(Context context) {
+
+		boolean enabled = Boolean.FALSE;
+
+		ConnectivityManager cm = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			enabled = Boolean.TRUE;
+		}
+
+		return enabled;
+
 	}
 
 	public static boolean isEmpty(Cursor cursor) {
