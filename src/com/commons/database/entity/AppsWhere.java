@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import com.commons.exception.AppsDataBaseException;
 import com.commons.messages.AppsMessages;
 
-/**
- * @author Lluis Alonso Asc—n
- * 
- * @date 20/08/2013
+/*
+ * This file is part of the Deg framework.
+ *
+ * @author Lluis Alonso <luitgy@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 public class AppsWhere {
 

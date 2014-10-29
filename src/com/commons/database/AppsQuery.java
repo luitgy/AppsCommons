@@ -14,6 +14,14 @@ import com.commons.messages.AppsMessages;
 import com.commons.util.AppsConstants;
 import com.commons.util.AppsUtils;
 
+/*
+ * This file is part of the Deg framework.
+ *
+ * @author Lluis Alonso <luitgy@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 public class AppsQuery {
 
 	public static String SELECT = "SELECT";

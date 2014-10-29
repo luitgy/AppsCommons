@@ -8,10 +8,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
-/**
- * @author Lluis Alonso Asc—n
- * 
- * @date 21/08/2013
+/*
+ * This file is part of the Deg framework.
+ *
+ * @author Lluis Alonso <luitgy@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 public abstract class AppsDataBaseController extends SQLiteOpenHelper {
 

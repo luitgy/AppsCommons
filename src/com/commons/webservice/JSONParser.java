@@ -10,16 +10,20 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
 
-/**
- * @author Lluis Alonso Asc—n
+/*
+ * This file is part of the Deg framework.
  *
- * @date 16/11/2013
+ * @author Lluis Alonso <luitgy@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 public class JSONParser {
 
@@ -32,12 +36,68 @@ public class JSONParser {
 
 	}
 
+	public JSONObject getJSONFromUrlPost(String url) {
+
+		// Making HTTP request
+		try {
+			// defaultHttpClient
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			
+			HttpPost httpPost = new HttpPost(url);
+			
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			HttpEntity httpEntity = httpResponse.getEntity();
+			is = httpEntity.getContent();			
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					is, "UTF-8"), 8);
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+			is.close();
+			json = sb.toString();
+			
+			Log.i("JSON", json);
+			
+		} catch (Exception e) {
+			Log.e("Buffer Error", "Error converting result " + e.toString());
+			e.printStackTrace();
+		}
+
+		// try parse the string to a JSON object
+		try {
+			jObj = new JSONObject(json);
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// return JSON String
+		return jObj;
+
+	}
+	
 	public JSONObject getJSONFromUrl(String url) {
 
 		// Making HTTP request
 		try {
 			// defaultHttpClient
 			DefaultHttpClient httpClient = new DefaultHttpClient();
+			
 			//HttpPost httpPost = new HttpPost(url);
 			HttpGet httpPost = new HttpGet(url);
 
