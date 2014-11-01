@@ -1,5 +1,6 @@
 package com.commons.util;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +23,60 @@ public abstract class AppsUtils {
 	 * Empty Constructor
 	 */
 	private AppsUtils() {
+	}
+	
+	public static String numberFormat(Float number, int fractionDigit) {
+
+		String numberFormat = AppsConstants.EMPTY_STRING;
+
+		if (number != null) {
+
+			NumberFormat format = NumberFormat.getNumberInstance();
+			format.setMaximumFractionDigits(fractionDigit);
+			format.setMinimumFractionDigits(fractionDigit);
+			
+			numberFormat = format.format(number);
+
+		}
+
+		return numberFormat;
+
+	}
+	
+	public static String numberFormat(Double number, int fractionDigit) {
+
+		String numberFormat = AppsConstants.EMPTY_STRING;
+
+		if (number != null) {
+
+			NumberFormat format = NumberFormat.getNumberInstance();
+			format.setMaximumFractionDigits(fractionDigit);
+			format.setMinimumFractionDigits(fractionDigit);
+
+			numberFormat = format.format(number);
+
+		}
+
+		return numberFormat;
+
+	}
+
+	public static String numberFormat(Long number, int fractionDigit) {
+
+		String numberFormat = AppsConstants.EMPTY_STRING;
+
+		if (number != null) {
+
+			NumberFormat format = NumberFormat.getNumberInstance();
+			format.setMaximumFractionDigits(fractionDigit);
+			format.setMinimumFractionDigits(fractionDigit);
+
+			numberFormat = format.format(number);
+
+		}
+
+		return numberFormat;
+
 	}
 
 	public static boolean isConnexionEnabled(Context context) {
