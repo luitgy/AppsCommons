@@ -1,10 +1,14 @@
 package com.commons.webservice;
 
+import java.util.List;
+
+import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.commons.log.AppsLog;
+import com.commons.util.AppsConstants;
 
 /*
  * This file is part of the Deg framework.
@@ -37,17 +41,57 @@ public class AppsWebService {
 	//
 	// }
 
-	public JSONArray getArray(String url, String nameTag) {
+	private String createUrl(String url, String userId, String locale) {
+
+		if (userId != null
+				&& (!userId.trim().equals(AppsConstants.EMPTY_STRING))) {
+			url += "?_uid=" + userId;
+		}
+
+		if (locale != null
+				&& (!locale.trim().equals(AppsConstants.EMPTY_STRING))) {
+
+			if (url.contains("?")) {
+				url += "&_locale=" + locale;
+			} else {
+				url += "?_locale=" + locale;
+			}
+
+		}
+
+		return url;
+
+	}
+
+	private JSONObject getJSON(String url, String userId, String locale,
+			boolean isGet, List<NameValuePair> pairs) {
+
+		// Creating JSON Parser instance
+		JSONParser jParser = new JSONParser();
+
+		String urlFormated = createUrl(url, userId, locale);
+
+		// getting JSON string from URL
+		JSONObject json = null;
+
+		if (isGet) {
+			json = jParser.getJSONFromUrlGet(urlFormated);
+		} else {
+			json = jParser.getJSONFromUrlPost(url, pairs);
+		}
+
+		return json;
+
+	}
+
+	public JSONArray getArrayByGet(String url, String userId, String locale,
+			String nameTag) {
 
 		try {
 
+			JSONObject json = getJSON(url, userId, locale, Boolean.TRUE, null);
+
 			JSONArray jsonArray = null;
-
-			// Creating JSON Parser instance
-			JSONParser jParser = new JSONParser();
-
-			// getting JSON string from URL
-			JSONObject json = jParser.getJSONFromUrl(url);
 
 			if (json != null) {
 				jsonArray = json.getJSONArray(nameTag);
@@ -63,19 +107,41 @@ public class AppsWebService {
 
 	}
 
-	public JSONObject getObject(String url, String nameTag) {
+	public JSONObject getObjectByGet(String url, String userId, String locale,
+			String nameTag) {
 
 		try {
 
+			JSONObject json = getJSON(url, userId, locale, Boolean.TRUE, null);
+
 			JSONObject jsonObj = null;
 
-			// Creating JSON Parser instance
-			JSONParser jParser = new JSONParser();
+			if (json != null) {
+				jsonObj = json.getJSONObject(nameTag);
+			}
 
-			// getting JSON string from URL
-			JSONObject json = jParser.getJSONFromUrl(url);
+			return jsonObj;
 
-			jsonObj = json.getJSONObject(nameTag);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			AppsLog.error("WSCOMMONS.OBJECT", e.getLocalizedMessage());
+			return null;
+		}
+
+	}
+
+	public JSONObject getObjectByPost(String url, String userId, String locale,
+			List<NameValuePair> pairs, String nameTag) {
+
+		try {
+
+			JSONObject json = getJSON(url, userId, locale, Boolean.FALSE, pairs);
+
+			JSONObject jsonObj = null;
+
+			if (json != null) {
+				jsonObj = json.getJSONObject(nameTag);
+			}
 
 			return jsonObj;
 
