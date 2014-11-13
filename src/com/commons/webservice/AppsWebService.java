@@ -130,20 +130,36 @@ public class AppsWebService {
 
 	}
 
-	public JSONObject getObjectByPost(String url, String userId, String locale,
-			List<NameValuePair> pairs, String nameTag) {
+	public ResponseWebService getObjectByPost(String url, String userId,
+			String locale, List<NameValuePair> pairs, String nameTag,
+			String errorNameTag) {
 
 		try {
 
 			JSONObject json = getJSON(url, userId, locale, Boolean.FALSE, pairs);
 
-			JSONObject jsonObj = null;
+			ResponseWebService responseWS = new ResponseWebService();
 
 			if (json != null) {
-				jsonObj = json.getJSONObject(nameTag);
+
+				if (errorNameTag != null) {
+
+					if (!json.isNull(nameTag)) {
+						responseWS.setJsonObj(json.getJSONObject(nameTag));
+						responseWS.setSuccess(Boolean.TRUE);
+					} else {
+						responseWS.setJsonObj(json.getJSONObject(errorNameTag));
+						responseWS.setSuccess(Boolean.FALSE);
+					}
+
+				} else {
+					responseWS.setJsonObj(json.getJSONObject(nameTag));
+					responseWS.setSuccess(Boolean.TRUE);
+				}
+
 			}
 
-			return jsonObj;
+			return responseWS;
 
 		} catch (JSONException e) {
 			e.printStackTrace();

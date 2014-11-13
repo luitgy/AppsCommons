@@ -14,9 +14,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,8 +46,10 @@ public class JSONParser {
 
 		try {
 
-			httpost.setEntity(new UrlEncodedFormEntity(pairs));
-			
+			if (pairs != null) {
+				httpost.setEntity(new UrlEncodedFormEntity(pairs));
+			}
+
 			HttpResponse httpResponse = httpclient.execute(httpost);
 			HttpEntity httpEntity = httpResponse.getEntity();
 			is = httpEntity.getContent();
