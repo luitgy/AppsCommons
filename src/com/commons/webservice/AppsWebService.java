@@ -77,7 +77,7 @@ public class AppsWebService {
 		if (isGet) {
 			json = jParser.getJSONFromUrlGet(urlFormated);
 		} else {
-			json = jParser.getJSONFromUrlPost(url, pairs);
+			json = jParser.getJSONFromUrlPost(urlFormated, pairs);
 		}
 
 		return json;
