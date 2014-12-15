@@ -152,7 +152,9 @@ public class AppsWebService {
 						responseWS.setSuccess(Boolean.FALSE);
 					}
 
-				} else {
+				} else if (nameTag.equals("success")) {
+					responseWS.setSuccess(json.getBoolean(nameTag));
+				}else {
 					responseWS.setJsonObj(json.getJSONObject(nameTag));
 					responseWS.setSuccess(Boolean.TRUE);
 				}
